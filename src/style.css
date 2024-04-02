@@ -1,0 +1,21 @@
+#main-container {
+    display: flex;
+    gap: 50px;
+}
+
+.board {
+    height: 500px;
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr); 
+  }
+  
+.cell {
+    width: 50px; /* Adjust based on your needs */
+    height: 50px; /* Adjust based on your needs */
+    border: 1px solid black; /* Optional */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
