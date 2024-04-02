@@ -60,4 +60,7 @@ class Player {
     }
 }
 
-export { Gameboard, Ship, Player }
+const player1 = new Player("Hubert");
+const player2 = new Player('AI');
+
+export { Gameboard, Ship, Player, player1, player2 }
