@@ -55,10 +55,11 @@ class Gameboard {
 }
 
 class Player {
-    constructor(name, turn, board) {
+    constructor(name, turn) {
         this.name = name;
         this.turn = turn;
         this.board = new Gameboard();
+        this.sunkShips = 0;
     }
 }
 

@@ -163,4 +163,9 @@ function computerCoords(array) {
     };
 }
 
+function checkWin() {
+    const array = player1.board.grid;
+    const win = array.every(item => item !== null && item.sunk === true);
+}
+
 export { createDOM, attack, computerAttack }
