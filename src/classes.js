@@ -7,6 +7,7 @@ class Ship {
 
     hit() {
         this.hitCount++;
+        this.isSunk();
     }
 
     isSunk() {
@@ -54,13 +55,14 @@ class Gameboard {
 }
 
 class Player {
-    constructor(name, board) {
+    constructor(name, turn, board) {
         this.name = name;
+        this.turn = turn;
         this.board = new Gameboard();
     }
 }
 
-const player1 = new Player("Hubert");
-const player2 = new Player('AI');
+const player1 = new Player("Hubert", true);
+const player2 = new Player('AI', false);
 
 export { Gameboard, Ship, Player, player1, player2 }
