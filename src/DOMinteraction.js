@@ -1,11 +1,14 @@
 import { Ship, Gameboard, Player, player1, player2 } from './classes';
 
 function createDOM() { 
-    const ship1 = new Ship(2);
-    const ship2 = new Ship(3);
+    const p1Ship1 = new Ship(2);
+    const p1Ship2 = new Ship(3);
+    const p1Ship3 = new Ship(4);
 
-    player1.board.placeShip(1, 3, ship1);
-    player1.board.placeShip(4, 6, ship2);
+    player1.board.placeShip(1, 3, p1Ship1);
+    player1.board.placeShip(4, 6, p1Ship2);
+    player1.board.placeShip(0, 0, p1Ship3);
+
     console.log(player1);
     console.log(player2);
 
@@ -22,8 +25,24 @@ function createDOM() {
         });
     });
 
-    player2.board.placeShip(8, 3, ship1);
-    player2.board.placeShip(4, 0, ship2);
+    const p2Ship1 = new Ship(2);
+    const p2Ship2 = new Ship(3);
+    const p2Ship3 = new Ship(4);
+    const p2Ship4 = new Ship(2);
+    const p2Ship5 = new Ship(3);
+    const p2Ship6 = new Ship(4);
+    const p2Ship7 = new Ship(4);
+    const p2Ship8 = new Ship(4);
+
+
+    player2.board.placeShip(8, 3, p2Ship1);
+    player2.board.placeShip(4, 0, p2Ship2);
+    player2.board.placeShip(0, 0, p2Ship3);
+    player2.board.placeShip(2, 6, p2Ship4);
+    player2.board.placeShip(5, 6, p2Ship5);
+    player2.board.placeShip(6, 1, p2Ship6);
+    player2.board.placeShip(2, 0, p2Ship7);
+    player2.board.placeShip(9, 6, p2Ship8);
 
     const gridContainer2 = document.getElementById('grid-container2');
 
@@ -46,7 +65,7 @@ function renderBoard() {
         for (let col = 0; col < 10; col++) {
             const cellId = `cell1-${row}-${col}`;
             const cellDiv = document.getElementById(cellId);
-            if (typeof player1.board.grid[row][col] === 'object') {
+            if (player1.board.grid[row][col] instanceof Ship) {
                 cellDiv.textContent = null;
             }
             else {
@@ -59,7 +78,13 @@ function renderBoard() {
         for (let col = 0; col < 10; col++) {
             const cellId = `cell2-${row}-${col}`;
             const cellDiv = document.getElementById(cellId);
-            cellDiv.textContent = player2.board.grid[row][col];
+            if (player2.board.grid[row][col] instanceof Ship) {
+                cellDiv.classList.add('ship');
+                cellDiv.textContent = null;    
+            }
+            else {
+                cellDiv.textContent = player2.board.grid[row][col];
+            }
         }
     }
 }
@@ -94,13 +119,23 @@ function attack() {
 
 function computerAttack() {
     if (player2.turn === true) {
-        const coords = computerCoords(player1.board.grid);
         setTimeout(() => {
-            console.log(coords().coords);
-            player2.board.grid[coords().coords[0]][coords().coords[1]] = 'x';
-            renderBoard();
-            player2.turn = false;
-            player1.turn = true;
+            const coords = computerCoords(player1.board.grid)();
+            console.log(coords.coords);
+            if (player2.board.grid[coords.coords[0]][coords.coords[1]] instanceof Ship) {
+                player2.board.grid[coords.coords[0]][coords.coords[1]].hit();
+                const div = document.getElementById(`cell2-${coords.coords[0]}-${coords.coords[1]}`);
+                div.classList.remove('ship');
+                div.classList.add('hit');
+                renderBoard();
+                computerAttack();
+            }
+            else {
+                player2.board.grid[coords.coords[0]][coords.coords[1]] = 'x';
+                renderBoard();
+                player2.turn = false;
+                player1.turn = true;
+            }
         }, 1000);
     }
 }

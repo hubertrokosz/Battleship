@@ -24,6 +24,14 @@
     background-color: darkgray;
 }
 
+
+
+.ship {
+    border: 1px solid blue;
+    background-color: lightblue;
+}
+
 .hit {
     border: 1px solid red;
+    background-color: lightcoral;
 }
